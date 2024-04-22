@@ -7,6 +7,9 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded());
 
+app.get('/', (req, res) => {
+  return res.sendFile('index.html');
+})
 
 //404 catch for unknown routes
 app.use((req, res) => {

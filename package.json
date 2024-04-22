@@ -4,7 +4,7 @@
   "description": "Personal Budgeting App",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server/server.js",
+    "start": "NODE_ENV=production node src/server/server.js --open",
     "dev": "NODE_ENV=development webpack serve --open"
   },
   "nodemonConfig": {
