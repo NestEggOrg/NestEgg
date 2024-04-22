@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Personal Budgeting App",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node server/server.js",
+    "dev": "nodemon server/server.js & NODE_ENV=development webpack serve --open --hot"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +43,7 @@
     "style-loader": "^3.3.4",
     "supertest": "^6.3.4",
     "tailwindcss": "^3.4.1",
+    "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
