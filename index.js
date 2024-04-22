@@ -1,11 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import { render } from 'react-dom';
 import App from './src/client/App'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+// uncomment so that webpack can bundle styles
 
 
+render(
+  <App />,
+  document.getElementById('root')
+);

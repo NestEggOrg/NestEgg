@@ -10,22 +10,21 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
           presets: ['@babel/env', '@babel/react'],
+          plugins: [
+            '@babel/plugin-proposal-class-properties',
+            '@babel/plugin-proposal-object-rest-spread'  // Add this plugin
+          ]
         },
       },
       {
         test: /\.(scss|sass)$/,
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: ['ts-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i, // Match image files
@@ -48,11 +47,11 @@ module.exports = {
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, './dist'),
+      directory: path.join(__dirname, './build'),
+      publicPath: '/build/bundle.js'
     },
-    proxy: {
-      '/api': 'http://localhost:3000',
-      secure: false,
-    },
+    // proxy: {'/api':'http:localhost//3000'}
+    compress: true,
+    port: 8080,
   },
 };
