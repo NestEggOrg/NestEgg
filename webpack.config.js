@@ -1,5 +1,5 @@
 const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin')
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './index.js',
@@ -17,8 +17,8 @@ module.exports = {
           presets: ['@babel/env', '@babel/react'],
           plugins: [
             '@babel/plugin-proposal-class-properties',
-            '@babel/plugin-proposal-object-rest-spread'  // Add this plugin
-          ]
+            '@babel/plugin-proposal-object-rest-spread', // Add this plugin
+          ],
         },
       },
       {
@@ -37,7 +37,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx','.ts','.tsx'],
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new HTMLWebpackPlugin({
@@ -48,10 +48,11 @@ module.exports = {
   devServer: {
     static: {
       directory: path.join(__dirname, './build'),
-      publicPath: '/build/bundle.js'
+      publicPath: '/build/bundle.js',
     },
-    // proxy: {'/api':'http:localhost//3000'}
     compress: true,
     port: 8080,
+    open: true,
+    proxy: [{ context: ['/api'], target: 'http://localhost:3000' }],
   },
 };
