@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const PORT = 3000;
 
+const db = require('./models/dbModels');
+
 //parse incoming JSON and form data
 app.use(express.json());
 app.use(express.urlencoded());
@@ -12,10 +14,19 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
 
+app.get('/example', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM categories');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
 });
-
 //404 catch for unknown routes
 app.use((req, res) => {
   return res.sendStatus(404);
