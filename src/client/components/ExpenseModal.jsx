@@ -23,7 +23,7 @@ const ExpenseModal = ({ isOpen, onClose }) => {
       <div
         style={{
           background: 'white',
-          height: 500,
+          height: 600,
           width: 400,
           margin: 'auto',
           padding: '2%',
@@ -42,6 +42,20 @@ const ExpenseModal = ({ isOpen, onClose }) => {
           <div>
             <label htmlFor='name' className="block text-sm font-medium text-gray-700">Name:</label>
             <input type='text' id='name' name='name' className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+          </div>
+
+          <div>
+            <label htmlFor='category' className="block text-sm font-medium text-gray-700">Category:</label>
+            <select name="categories" id="categories" className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
+              <option value="housing">Housing</option>
+              <option value="utilities">Utilities</option>
+              <option value="food">Food</option>
+              <option value="shopping">Shopping</option>
+              <option value="transport">Transport</option>
+              <option value="debt">Debt</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="misc">Misc</option>
+            </select>
           </div>
 
           <div>

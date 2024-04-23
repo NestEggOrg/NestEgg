@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HeaderBar from './HeaderBar';
 import Expenses from './Expenses';
 import PieChartArea from './PieChartArea';
@@ -61,6 +61,7 @@ const HomePage = () => {
   const [totalSpend, setTotalSpend] = useState(testSpend);
   const [category, setCategory] =useState("all expenses");
   const [timeFrame, setTimeFrame] =useState("current month");
+  const [pieSlices, setPieSlices] =useState([])
   const [chartData, setChartData] = useState({
     labels: TestData.map((data) => data.year), 
     datasets: [
@@ -68,23 +69,38 @@ const HomePage = () => {
         label: "spend",
         data: TestData.map((data) => data.userGain),
         backgroundColor: [
-          // "rgba(75,192,192,1)",
-          // &quot;#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-          "#50AF95",
-          "#f3ba2f",
+          "rgb(190 18 60)",
+          "rgb(253 164 175)",
+          "rgb(55 48 163)",
+          "rgb(165 180 252)",
+          "rgb(8 145 178)",
+          "rgb(103 232 249)",
+          "rgb(21 128 61)",
+          "rgb(134 239 172)",
+          "rgb(133 77 14)",
+          "rgb(254 240 138)",
+          "rgb(162 28 175)",
+          "rgb(240 171 252)",
+          "rgb(67 56 202)",
+          "rgb(165 180 252)",
+          "rgb(2 132 199)",
+          "rgb(125 211 252)",
         ],
         borderColor: "black",
-        borderWidth: 2
+        borderWidth: 1
       }
     ]
   });
 
+  useEffect(()=> {
+    const newState = [];
+    totalSpend.forEach((exp, index) => {
+      newState.push(exp);
+      newState.push(budget[index])
+    });
+    setPieSlices(newState)
+    console.log(pieSlices)
+  }, [totalSpend, budget])
 
   // Handles User Modal 
   const handleUserOpen = () => {

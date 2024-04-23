@@ -12,6 +12,16 @@ const Login = () => {
 
   const handleSignUp = () => {
     // Navigate to sign up page
+    fetch('localhost:8080/signup', {
+      method:"POST",
+      body: JSON.stringify({
+        username,
+        password
+      }),
+      headers: {
+        "Content-type":"application/json"
+      }
+    })
   };
 
   return (

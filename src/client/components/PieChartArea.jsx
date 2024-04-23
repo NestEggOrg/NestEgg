@@ -17,7 +17,7 @@ const PieChartArea = ({chartData, category, timeFrame, totalSpend, budget, categ
     legendItems.push(
       <LegendItem
         id={index}
-        color={chartData.datasets[0].backgroundColor[index]}
+        color={chartData.datasets[0].backgroundColor[index *2]}
         category={categories[index]}
         spend={cat}
         budget={budget[index]}
@@ -26,7 +26,7 @@ const PieChartArea = ({chartData, category, timeFrame, totalSpend, budget, categ
   })
 
   return (
-    <div className="border-2 border-black w-1/2 ml-5 mr-5">
+    <div className=" w-1/3 mt-10 ml-5 mr-5">
       <PieChart  chartData={chartData} category={category}
         timeFrame={timeFrame}></PieChart>
         <div>
