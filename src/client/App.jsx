@@ -1,12 +1,29 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Redirect,
+} from 'react-router-dom';
+import Login from './components/Login';
+
+const isAuthenticated = () => {
+  // Check if user is authenticated
+  return true;
+};
+
+const ProtectedRoute = () => {
+  // Add Protected Route for login
+};
 
 const App = () => {
   return (
-    <div id='app' className='flex justify-center items-center h-screen'>
-      <h1 className='text-4xl text-blue-200 bg-gray-800 p-4 rounded-lg'>
-        Hello World
-      </h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Login />} />
+        {/* <ProtectedRoute></ProtectedRoute> */}
+      </Routes>
+    </Router>
   );
 };
 
