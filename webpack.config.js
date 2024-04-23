@@ -5,6 +5,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: './index.js',
   output: {
+    publicPath: '/',
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
   },
@@ -54,6 +55,7 @@ module.exports = {
     compress: true,
     port: 8080,
     open: true,
+    historyApiFallback: true,
     proxy: [{ context: ['/api'], target: 'http://localhost:3000' }],
   },
 };

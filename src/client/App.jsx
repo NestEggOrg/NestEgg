@@ -6,6 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import Login from './components/Login';
+import TestComp from './components/TestComp';
 
 const isAuthenticated = () => {
   // Check if user is authenticated
@@ -21,6 +22,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path='/' element={<Login />} />
+        <Route path='/test' element={<TestComp />} />
         {/* <ProtectedRoute></ProtectedRoute> */}
       </Routes>
     </Router>
