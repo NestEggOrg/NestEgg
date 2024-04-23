@@ -44,21 +44,34 @@ const testExpenses = [
   { title: 'TestTitle2', category: 'home', cost: 250, date: '04/02/2024' },
 ];
 
+const testBudget = [450, 50, 100, 100, 100, 50, 50, 50];
+const testSpend = [440, 40, 90, 90, 90, 40, 50, 60];
+
+const categories = ['Housing', 'Utilities', 'Food', 'Shopping', 'Transport', 'Debt', 'Entertainment', 'Misc']
+
 const HomePage = () => {
   const [expenses, setExpenses] = useState(testExpenses);
-  const [budget, setBudget] = useState([])
+  const [budget, setBudget] = useState(testBudget);
+  const [totalSpend, setTotalSpend] = useState(testSpend);
+  const [category, setCategory] =useState("all expenses");
+  const [timeFrame, setTimeFrame] =useState("current month");
   const [chartData, setChartData] = useState({
     labels: TestData.map((data) => data.year), 
     datasets: [
       {
-        label: "Users Gained ",
+        label: "spend",
         data: TestData.map((data) => data.userGain),
         backgroundColor: [
-          "rgba(75,192,192,1)",
+          // "rgba(75,192,192,1)",
           // &quot;#ecf0f1",
           "#50AF95",
           "#f3ba2f",
-          "#2a71d0"
+          "#2a71d0",
+          "#50AF95",
+          "#f3ba2f",
+          "#2a71d0",
+          "#50AF95",
+          "#f3ba2f",
         ],
         borderColor: "black",
         borderWidth: 2
@@ -74,7 +87,13 @@ const HomePage = () => {
       {/* <HeaderBar></HeaderBar> */}
       <div className='flex'>
         <Expenses expenses={expenses} />
-        <PieChartArea chartData={chartData}></PieChartArea>
+        <PieChartArea chartData={chartData}
+        totalSpend={totalSpend}
+        budget={budget}
+        category={category}
+        timeFrame={timeFrame}
+        categories={categories}
+        ></PieChartArea>
       </div>
       {/* TopBar */}
       {/*  */}

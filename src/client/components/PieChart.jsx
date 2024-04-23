@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pie } from "react-chartjs-2";
 
-const PieChart = ({chartData}) => {
+const PieChart = ({chartData, category, timeFrame}) => {
 
 
   return (
@@ -13,7 +13,7 @@ const PieChart = ({chartData}) => {
           plugins: {
             title: {
               display: true,
-              text: "Users Gained between 2016-2020"
+              text: `Spending summary for ${category} over the ${timeFrame}.`
             }
           }
         }}
