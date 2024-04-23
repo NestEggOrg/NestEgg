@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const userController = require('./controllers/userController');
 const PORT = 3000;
+const userController = require('./controllers/userController');
+
 
 // console.log(path.join(path.join(__dirname, '../../dist', 'index.html')));
 
@@ -15,7 +16,7 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../../dist/index.html'));
+  return res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
 });
 
 // adding route for /signup that directs to userController and sessionController
