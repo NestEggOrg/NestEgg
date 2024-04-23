@@ -11,9 +11,6 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
-// app.get('/', (req, res) => {
-//   return res.sendFile(path.join(__dirname, '../../dist/index.html'));
-// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
