@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 const HeaderBar = () => {
+ 
 
   return (
-  <div className='bg'>
-
-  </div>
-  )
+    <div>
+      
+    </div>
+  );
 };
 
 export default HeaderBar;

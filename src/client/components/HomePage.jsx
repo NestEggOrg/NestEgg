@@ -6,7 +6,13 @@ const HomePage = () => {
 
   return (
     <div>HomePage
+      {/* Header Bar */}
       <HeaderBar></HeaderBar>
+      {/* TopBar */}
+      {/*  */}
+      {/* Pie Chart */}
+
+
     </div>
   );
 };

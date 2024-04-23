@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
+
 const isAuthenticated = () => {
   // Check if user is authenticated
   return true;
@@ -18,13 +19,12 @@ const ProtectedRoute = () => {
 
 const App = () => {
   return (
-    <Router>
+    <div className='App'>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<HomePage />} />
-        {/* <ProtectedRoute></ProtectedRoute> */}
       </Routes>
-    </Router>
+    </div>
   );
 };
 
