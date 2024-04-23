@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const HeaderBar = () => {
+const TopBar = () => {
  
 
   return (
@@ -10,4 +10,4 @@ const HeaderBar = () => {
   );
 };
 
-export default HeaderBar;
+export default TopBar;

@@ -5,9 +5,9 @@ const HomePage = () => {
  
 
   return (
-    <div>HomePage
+    <div>
       {/* Header Bar */}
-      <HeaderBar></HeaderBar>
+      <HeaderBar/>
       {/* TopBar */}
       {/*  */}
       {/* Pie Chart */}
