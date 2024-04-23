@@ -2,16 +2,18 @@ const db = require('../models/dbModels');
 
 
 const expenseController = {
-  getAllExpenses(){
+  getAllExpenses(req, res, next){
+    
+    const query = 'SELECT * FROM '
+    db.query(query)
+  },
+  createExpense(req, res, next){
 
   },
-  createExpense(){
+  updateExpense(req, res, next){
 
   },
-  updateExpense(){
-
-  },
-  deleteExpense(){
+  deleteExpense(req, res, next){
 
   }
 }
