@@ -80,8 +80,8 @@ const UserModal = ({ isOpen, onClose }) => {
       <div
         style={{
           background: 'white',
-          height: 700,
-          width: 400,
+          height: 620,
+          width: 480,
           margin: 'auto',
           padding: '2%',
           border: '2px solid #000',
