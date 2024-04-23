@@ -8,11 +8,11 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 // Serve static files from the 'dist' directory
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  return res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
 
 //404 catch for unknown routes
@@ -20,7 +20,7 @@ app.use((req, res) => {
   return res.sendStatus(404);
 });
 
-// Global error handler
+// Global error handlernpm
 app.use((err, req, res, next) => {
   // define defaultErr
   const defaultErr = {
