@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const userController = require('./controllers/userController');
 const PORT = 3000;
 
 //parse incoming JSON and form data
@@ -14,6 +15,12 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 app.get('/', (req, res) => {
   return res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
+
+// adding route for /signup that directs to userController and sessionController
+app.post('/signup', userController.createUser, (req, res) => {
+  res.status(200).json(res.locals.message); 
+
+})
 
 //404 catch for unknown routes
 app.use((req, res) => {
