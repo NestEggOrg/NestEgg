@@ -4,7 +4,9 @@ import Expenses from './Expenses';
 import PieChartArea from './PieChartArea';
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
-
+import TopBar from './TopBar';
+import UserModal from './UserModal';
+import ExpenseModal from './ExpenseModal';
 
 const TestData = [
   {
@@ -50,6 +52,10 @@ const testSpend = [440, 40, 90, 90, 90, 40, 50, 60];
 const categories = ['Housing', 'Utilities', 'Food', 'Shopping', 'Transport', 'Debt', 'Entertainment', 'Misc']
 
 const HomePage = () => {
+  const [isUserModal, setIsUserModal] = useState(false)
+  const [isExpenseModal, setIsExpenseModal] = useState(false)
+
+
   const [expenses, setExpenses] = useState(testExpenses);
   const [budget, setBudget] = useState(testBudget);
   const [totalSpend, setTotalSpend] = useState(testSpend);
@@ -80,9 +86,30 @@ const HomePage = () => {
   });
 
 
+  // Handles User Modal 
+  const handleUserOpen = () => {
+    setIsUserModal(true)
+  }
+  const handleUserClose = () => {
+    setIsUserModal(false)
+  }
+
+// Handles Expense Modal
+  const handleExpenseOpen = () => {
+    setIsExpenseModal(true)
+  }
+  const handleExpenseClose = () => {
+    setIsExpenseModal(false)
+  }
+
   return (
+    
     <div className='min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-200-500 to-white-500'>
-      HomePage
+      <HeaderBar handleUserOpen={handleUserOpen}/>
+        <UserModal isOpen={isUserModal} onClose = {handleUserClose}/>
+      <TopBar handleExpenseOpen={handleExpenseOpen}/>
+      <ExpenseModal isOpen={isExpenseModal} onClose={handleExpenseClose}/>
+      
       {/* Header Bar */}
       {/* <HeaderBar></HeaderBar> */}
       <div className='flex'>
