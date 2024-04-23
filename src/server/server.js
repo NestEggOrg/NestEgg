@@ -5,7 +5,7 @@ const PORT = 3000;
 const userController = require('./controllers/userController');
 
 
-// console.log(path.join(path.join(__dirname, '../../dist', 'index.html')));
+const db = require('./models/dbModels');
 
 //parse incoming JSON and form data
 app.use(express.json());
@@ -15,8 +15,19 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
+
+app.get('/example', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM categories');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
 });
 
 // adding route for /signup that directs to userController and sessionController
