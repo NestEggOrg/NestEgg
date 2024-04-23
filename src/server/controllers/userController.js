@@ -1,3 +1,6 @@
+// imposting database 
+const db = require('../models/dbModels'); 
+
 // importing bcrypt 
 const bcrypt = require('bcrypt'); 
 // defining SALT as global variable
@@ -17,22 +20,22 @@ createUser: async (req, res, next) =>{
         const paramsOne = [username]
         const usernameQuery = "SELECT * from users WHERE username = $1"
         const result = await db.query(usernameQuery, paramsOne)
-        if (result) {
-            res.locals.message = 'username already exists'
+        if (result.rows.length > 0) {
+            res.locals.signUpMessage = 'username already exists'
         } // if username does not exist the proceed to add the user to the database 
         else {
             // hash the password using bcrypt 
             const hash = await bcrypt.hash(password, SALT); 
             const paramsTwo = [username, hash]
             // add both username and hashed password to the data base 
-            const addNewUserQuery = "INSERT INTO users (username, password) VALUES ($1, $2)"
+            const addNewUserQuery = "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *"
             const added = await db.query(addNewUserQuery, paramsTwo)
             // save user id in res.locals for use in next controller 
-            /*NEED TO CONFIRM THIS WITH DB table*/
-            res.locals.signUpmessage = 'Sign up successful!'
-            res.locals.userId = added.__id 
-            return next(); 
+            res.locals.signUpMessage = 'Sign up successful!'
+            res.locals.userId = added.rows[0]['user_id']; 
+            console.log(res.locals.userId);   
         }
+        return next();
     } catch (err) {
         return next({
             log: `Express error handler caught error in createUser middleware: ${err}`,
@@ -54,16 +57,25 @@ verifyUser: async(req, res, next) => {
         // get matching username and hashed password from database
         const paramsOne = [username]
         const usernameQuery = "SELECT * from users WHERE username = $1"
-        const result = db.query(usernameQuery, paramsOne)
+        const result = await db.query(usernameQuery, paramsOne)
+        console.log('result', result.rows) 
         // if username does not exist return error message 
-        if (!result) {
+        if (result.rows.length=== 0) {
             res.locals.signInMessage = 'Username and password combination is not recognized'
         }
-
-
-        // compare hashed password  
-
-
+        else {
+            // compare hashed password
+            const match = await bcrypt.compare(password, result.rows[0]['password'])
+            if (!match){
+                res.locals.signInMessage= 'Username and password combination is not recognized'; 
+            }
+            else{
+                res.locals.userId = result.rows[0]['user_id']
+                console.log('id', res.locals.userId)
+                res.locals.signInMessage = 'Sign in successful'; 
+            }
+        }
+        return next()
     } 
     catch(err) {
         return next({
