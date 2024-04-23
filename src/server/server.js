@@ -6,19 +6,16 @@ const PORT = 3000;
 
 // console.log(path.join(path.join(__dirname, '../../dist', 'index.html')));
 
-// console.log(path.join(path.join(__dirname, '../../dist', 'index.html')));
-
 //parse incoming JSON and form data
 app.use(express.json());
 app.use(express.urlencoded());
 
 // Serve static files from the 'dist' directory
 app.use(express.static(path.join(__dirname, '../../dist')));
-app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../../../../dist/index.html'));
+  return res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
 
 // adding route for /signup that directs to userController and sessionController
