@@ -15,7 +15,7 @@ const Login = () => {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-200-500 to-white-500'>
+    <div className='flex items-center justify-center min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-200 to-white-500'>
       <form
         onSubmit={handleSubmit}
         className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
@@ -68,7 +68,7 @@ const Login = () => {
         </div>
         <div className='flex items-center justify-center text-sm mt-4'>
           <a
-            href='#'
+            href='/test'
             className='font-medium text-purple-600 hover:text-purple-500'
           >
             Forgot your password?
