@@ -20,10 +20,13 @@ const ProtectedRoute = () => {
 const App = () => {
   return (
     <div className='App'>
+      <Router>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<HomePage />} />
+        {/* <ProtectedRoute></ProtectedRoute> */}
       </Routes>
+    </Router>
     </div>
   );
 };
