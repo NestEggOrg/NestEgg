@@ -58,3 +58,31 @@ describe('GET /example', () => {
     ]);
   });
 });
+
+describe('POST /signup', () => {
+  it('should create a new user and return a success message', async () => {
+    const response = await request(app)
+      .post('/signup')
+      .send({ username: 'newuser', password: 'password123' });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual(`{ signUpMessage: 'Sign up successful!' }`);
+  });
+
+  it('should not create a user if the username already exists', async () => {
+    const response = await request(app)
+      .post('/signup')
+      .send({ username: 'existinguser', password: 'password123' });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({ signUpMessage: 'username already exists' });
+  });
+
+  it('should return an error if username or password is missing', async () => {
+    const response = await request(app)
+      .post('/signup')
+      .send({ username: 'testuser' });
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual({
+      error: 'Username and password are required',
+    });
+  });
+});
