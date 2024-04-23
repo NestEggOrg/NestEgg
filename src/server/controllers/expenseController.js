@@ -32,7 +32,23 @@ const expenseController = {
         });
       });
   },
-  updateExpense(req, res, next) {},
-  deleteExpense(req, res, next) {},
+  updateExpense(req, res, next) {
+    //leaving blank for now, stretch feature to update expenses
+  },
+  deleteExpense(req, res, next) {
+    const { expense_id } = req.body;
+    const query = `DELETE FROM expenses WHERE expense_id = ${expense_id} RETURNING expense_id`;
+    db.query(query)
+      .then(data => {
+        console.log(`Expense deleted with id: ${data}`);
+        return next();
+      })
+      .catch(err => {
+        return next({
+          log: `Error in expenseController.deleteExpense: ${err}`,
+          message: `An error occurred while deleting expense: ${err}`,
+        });
+      });
+  },
 };
 module.exports = expenseController;
