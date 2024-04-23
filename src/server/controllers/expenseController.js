@@ -1,3 +1,6 @@
+const db = require('../models/dbModels');
+
+
 const expenseController = {
   getAllExpenses(){
 
