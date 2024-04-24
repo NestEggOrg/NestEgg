@@ -3,11 +3,13 @@ const cookieParser = require('cookie-parser')
 const app = express();
 const path = require('path');
 const PORT = 3000;
+const expenseController = require('./controllers/expenseController')
 
 // import auth router 
 const authRouter = require('./routers/authRouter')
 
 const db = require('./models/dbModels');
+const exp = require('constants');
 
 //parse incoming JSON and form data
 app.use(cookieParser())
@@ -30,11 +32,38 @@ app.use('/auth', authRouter);
 
 // Serve static files from the 'dist' directory
 app.use(express.static(path.join(__dirname, '../../dist')));
+
+// Routes
+
+app.get('/example', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM categories');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+//retrieves all expenses from a database from a given user ID
+app.get('/expense', expenseController.getAllExpenses, (req, res) => {
+  return res.status(200).json(res.locals.expenses);
+})
+
+//adds a new expense to the database
+app.post('/expense', expenseController.createExpense, (req, res) => {
+  return res.sendStatus(200);
+})
+
+//deletes an expense by ID
+app.delete('/expense', expenseController.deleteExpense, (req, res) => {
+  return res.sendStatus(200);
+})
+
+//catch all before 404 to serve login page
 app.get('*', (req, res) => {
   return res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
 });
-
-
 
 //404 catch for unknown routes
 app.use((req, res) => {
