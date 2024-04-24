@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Expense from './Expense';
 
-const Expenses = ({ expenses }) => {
+const Expenses = ({ expenses, handleDelete }) => {
   const expenseList = [];
 
     expenses.forEach(ex => {
@@ -11,6 +11,7 @@ const Expenses = ({ expenses }) => {
       category={ex.category}
       cost={ex.cost}
       date={ex.date}
+      handleDelete={handleDelete}
     />
     )})
 

@@ -6,11 +6,14 @@ const PieChart = ({chartData, category, timeFrame}) => {
 
   return (
     <div>
-      <h2 style={{ textAlign: "center" }}>Budget Summary</h2>
+      <h1 className='flex justify-center font-bold text-xl'>Budget Summary</h1>
       <Pie
         data={chartData}
         options={{
           plugins: {
+            legend: {
+              display: false,
+            },
             title: {
               display: true,
               text: `Spending summary for ${category} over the ${timeFrame}.`
