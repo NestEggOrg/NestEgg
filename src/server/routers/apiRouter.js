@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const expenseController = require('../controllers/expenseController');
-const budgetController = require('../controllers/bugetController')
+const budgetController = require('../controllers/budgetController')
 
 //retrieves all expenses from a database from a given user ID
 router.get('/expense', expenseController.getAllExpenses, (req, res) => {
@@ -18,6 +18,18 @@ router.delete('/expense', expenseController.deleteExpense, (req, res) => {
   return res.sendStatus(200);
 })
 
-router
+//gets all budgets by user ID
+router.get('/budget', budgetController.getAllBudgets, (req, res) => {
+  return res.status(200).json(res.locals.budgets);
+})
 
+//creates a budget tied to user ID
+router.get('/budget', budgetController.createBudget, (req, res) => {
+  return res.status(200);
+})
+
+//updates an existing budget by ID
+router.put('/budget', budgetController.updateBudget, (req, res) => {
+  return res.status(200);
+})
 module.exports = router;
