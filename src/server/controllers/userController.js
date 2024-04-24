@@ -58,7 +58,7 @@ verifyUser: async(req, res, next) => {
         const usernameQuery = "SELECT * from users WHERE username = $1"
         const result = await db.query(usernameQuery, paramsOne)
         // if username does not exist return error message 
-        if (result.rows.length=== 0) {
+        if (result.rows.length === 0) {
             res.locals.signInMessage = 'Username and password combination is not recognized'
         }
         else {

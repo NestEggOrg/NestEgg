@@ -10,8 +10,8 @@ jest.mock('../src/server/models/dbModels', () => ({
 
 function mockQuery(mockResponse) {
   db.query.mockImplementation((query, params) => {
-    console.log('Mocked query:', query);
-    console.log('Mocked params:', params);
+    // console.log('Mocked query:', query);
+    // console.log('Mocked params:', params);
     if (query.includes('INSERT INTO users')) {
       return Promise.resolve({ rows: [{ user_id: 1 }] });
     }
@@ -24,12 +24,12 @@ describe('POST /signup', () => {
     mockQuery({ rows: [] }); // No existing user
 
     const response = await request(app)
-      .post('/signup')
+      .post('/auth/signup')
       .send({ username: 'newuser', password: 'password123' });
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual('Sign up successful!');
-    expect(db.query).toHaveBeenCalledTimes(2); // Check if both queries were called
+    expect(db.query).toHaveBeenCalledTimes(3); // Check if queries were called passing middleware
   });
 
   it('should return an error if username already exists', async () => {
@@ -37,7 +37,7 @@ describe('POST /signup', () => {
     mockQuery({ rows: [{ username: 'existinguser' }] });
 
     const response = await request(app)
-      .post('/signup')
+      .post('/auth/signup')
       .send({ username: 'existinguser', password: 'password123' });
 
     expect(response.statusCode).toBe(200);
@@ -59,7 +59,7 @@ describe('POST /signin', () => {
     }); // Existing user with hashed password
 
     const response = await request(app)
-      .post('/signin')
+      .post('/auth/signin')
       .send({ username: 'existinguser', password: 'mypass' });
 
     expect(response.statusCode).toBe(200);
@@ -71,7 +71,7 @@ describe('POST /signin', () => {
     mockQuery({ rows: [] });
 
     const response = await request(app)
-      .post('/signin')
+      .post('/auth/signin')
       .send({ username: 'nonexistentuser', password: 'wrongpassword' });
 
     expect(response.statusCode).toBe(200);

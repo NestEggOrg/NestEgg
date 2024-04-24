@@ -54,6 +54,7 @@ describe('GET information from database with server routes', () => {
       { category_id: 5, category_name: 'shopping' },
       { category_id: 6, category_name: 'entertainment' },
       { category_id: 7, category_name: 'misc' },
+      { category_id: 8, category_name: 'food' },
     ]);
   });
 
