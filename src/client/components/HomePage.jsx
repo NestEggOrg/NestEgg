@@ -63,7 +63,7 @@ const HomePage = () => {
   const [userID, setUserID] = useState('1');
   const [username, setUsername] = useState('test');
   const [expenses, setExpenses] = useState(testExpenses);
-  const [budget, setBudget] = useState([10,0,0,0,0,0,0,0]);
+  const [budget, setBudget] = useState([0,0,0,0,0,0,0,0]);
   const [income, setIncome] = useState(0);
   const [totalSpend, setTotalSpend] = useState(testSpend);
   const [category, setCategory] = useState('all expenses');
@@ -175,8 +175,7 @@ const HomePage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reqBody),
       });
-      const expenses = await response.json();
-      setExpenses(expenses);
+      getExpenses()
     } catch (error) {
       console.log('error in getting expenses: ', error);
     }
@@ -187,7 +186,7 @@ const HomePage = () => {
     try {
       const response = await fetch(`api/expense`);
       const expenses = await response.json();
-      console.log(expenses)
+      console.log("expense", expenses)
       setExpenses(expenses);
     } catch (error) {
       console.log('error in getting expenses: ', error);

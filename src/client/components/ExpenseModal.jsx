@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExpenseModal = ({ isOpen, onClose, getExpenses, userID }) => {
+const ExpenseModal = ({ isOpen, onClose, getExpenses }) => {
   if (!isOpen) return null;
 
   const handleSubmit = async e => {
@@ -12,7 +12,6 @@ const ExpenseModal = ({ isOpen, onClose, getExpenses, userID }) => {
     const date = e.target[4].value;
 
     const reqBody = {
-      _user_id: userID,
       _category_id: category,
       amount: amount,
       title: title,
@@ -20,6 +19,8 @@ const ExpenseModal = ({ isOpen, onClose, getExpenses, userID }) => {
       date: date,
     };
     
+    console.log(reqBody)
+
     try {
       const response = await fetch('api/expense', {
         method: 'POST',
@@ -30,6 +31,7 @@ const ExpenseModal = ({ isOpen, onClose, getExpenses, userID }) => {
     } catch (error) {
       console.log('error in adding expense: ', error);
     }
+    onClose()
     // const { _user_id, _category_id, amount, title, description, date }
   };
 
@@ -70,15 +72,15 @@ const ExpenseModal = ({ isOpen, onClose, getExpenses, userID }) => {
           {/* Adds spacing between elements and padding to the form */}
           <div>
             <label
-              htmlFor='name'
+              htmlFor='title'
               className='block text-sm font-medium text-gray-700'
             >
-              Name:
+              Title:
             </label>
             <input
               type='text'
-              id='name'
-              name='name'
+              id='title'
+              name='title'
               className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
             />
           </div>

@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import Expense from './Expense';
 
+const categories = {
+  1: 'Housing', 
+  2: 'Utilities', 
+  3: 'Transport',
+  4: 'Debt', 
+  5: 'Shopping', 
+  6: 'Entertainment', 
+  7: 'Miscellaneous',
+  8: 'Food'
+}
+
 const Expenses = ({ expenses, handleDelete }) => {
   const expenseList = [];
 
@@ -9,9 +20,9 @@ const Expenses = ({ expenses, handleDelete }) => {
     <Expense
       id={ex.expense_id}
       title={ex.title}
-      category={ex.category}
-      cost={ex.cost}
-      date={ex.date}
+      category={categories[ex._category_id]}
+      cost={ex.amount}
+      date={ex.date.toString().slice(0,10)}
       handleDelete={handleDelete}
     />
     )})

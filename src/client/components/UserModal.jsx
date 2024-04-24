@@ -16,9 +16,9 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
 
   const [leftover, setLeftover] = useState(0);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     const reqBody = {
-      user_id: userID,
       income,
       housing,
       utilities,
@@ -29,6 +29,7 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
       entertainment,
       misc
     }
+    console.log(reqBody)
     try {
       const response = await fetch('/api/budget', {
         method: 'PUT',
@@ -129,7 +130,7 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
       >
         <button onClick={onClose}>X</button>
 
-        <form onSubmit={() => {handleSubmit}}>
+        <form onSubmit={(e) => {handleSubmit(e)}}>
           <h1 className='text-2xl'>Income</h1>
 
           <div>

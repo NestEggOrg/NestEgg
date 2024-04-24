@@ -2,7 +2,9 @@ const db = require('../models/dbModels');
 
 const expenseController = {
   getAllExpenses(req, res, next) {
-    const { user_id } = req.params;
+    console.log(req.cookies.sessionCookie)
+    const user_id  = req.cookies.sessionCookie;
+    
     const query = `SELECT * FROM expenses WHERE _user_id = ${user_id}`;
     db.query(query)
       .then(data => {
@@ -17,10 +19,12 @@ const expenseController = {
       });
   },
   createExpense(req, res, next) {
-    const { _user_id, _category_id, amount, title, description, date } =
+    const user_id  = req.cookies.sessionCookie;
+    const { _category_id, amount, title, description, date } =
       req.body;
-    const query = `INSERT INTO expenses (_user_id, _category_id, amount, title, description, date) VALUES (${_user_id}, ${_category_id}, ${amount}, ${title}, ${description}, ${date}) RETURNING expense_id`;
-    db.query(query)
+    const params = [user_id,_category_id, amount, title, description, date]
+    const query = `INSERT INTO expenses (_user_id, _category_id, amount, title, description, date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING expense_id`;
+    db.query(query, params)
       .then(data => {
         console.log('Expense created with id: ', data);
         return next();
@@ -32,9 +36,9 @@ const expenseController = {
         });
       });
   },
-  deleteExpense(req, res, next) {
+  deleteExpense (req, res, next) {
     const { expense_id } = req.body;
-    const query = `DELETE FROM expenses WHERE expense_id = ${expense_id} RETURNING expense_id`;
+    const query = `DELETE FROM expenses WHERE expense_id = ${expense_id} RETURNING *`;
     db.query(query)
       .then(data => {
         console.log(`Expense deleted with id: ${data}`);
