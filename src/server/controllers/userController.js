@@ -22,6 +22,7 @@ createUser: async (req, res, next) =>{
         const result = await db.query(usernameQuery, paramsOne)
         if (result.rows.length > 0) {
             res.locals.signUpMessage = 'username already exists'
+            res.locals.verified = false; 
         } // if username does not exist the proceed to add the user to the database 
         else {
             // hash the password using bcrypt 
@@ -32,7 +33,8 @@ createUser: async (req, res, next) =>{
             const added = await db.query(addNewUserQuery, paramsTwo)
             // save user id in res.locals for use in next controller 
             res.locals.signUpMessage = 'Sign up successful!'
-            res.locals.userId = added.rows[0]['user_id'];    
+            res.locals.userId = added.rows[0]['user_id'];
+            res.locals.verified = true;    
         }
         return next();
     } catch (err) {
