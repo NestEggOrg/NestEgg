@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-const HeaderBar = ({ handleUserOpen }) => {
+const HeaderBar = ({ handleUserOpen, username, budget }) => {
+  useEffect(() => {
+    if (!budget[0]) {
+      handleUserOpen();
+    }
+  }, []);
+
+  const logout = () => {
+    window.location.href = ('http://localhost:8080/')
+  };
+
   return (
     <div className='flex justify-between border-b-2 border-neutral-950 '>
       <div className='flex m-5'>
@@ -19,13 +29,26 @@ const HeaderBar = ({ handleUserOpen }) => {
         <h1 className='text-4xl'>NestEgg</h1>
       </div>
 
-      <div className='flex flex-col justify-center '>
-        <button
-          onClick={handleUserOpen}
-          className='p-3 m-2 rounded-xl border-2 border-neutral-950'
-        >
-          Username
-        </button>
+      <div className='flex'>
+        <div className='flex flex-col justify-center '>
+          <h1 className='p-3 m-2 text-2xl'>Hello, {username}</h1>
+        </div>
+        <div className='flex flex-col justify-center '>
+          <button
+            onClick={handleUserOpen}
+            className='p-3 m-2 rounded-xl border-2 border-neutral-950'
+          >
+            Edit Budget
+          </button>
+        </div>
+        <div className='flex flex-col justify-center '>
+          <button
+            onClick={logout}
+            className='p-3 m-2 rounded-xl border-2 border-neutral-950'
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );

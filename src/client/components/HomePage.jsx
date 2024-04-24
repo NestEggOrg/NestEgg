@@ -8,10 +8,21 @@ import TopBar from './TopBar';
 import UserModal from './UserModal';
 import ExpenseModal from './ExpenseModal';
 
-
 const testExpenses = [
-  { title: 'TestTitle', category: 'home', cost: 150, date: '04/01/2024', expense_id: 1},
-  { title: 'TestTitle2', category: 'home', cost: 250, date: '04/02/2024', expense_id: 2 },
+  {
+    title: 'TestTitle',
+    category: 'home',
+    cost: 150,
+    date: '04/01/2024',
+    expense_id: 1,
+  },
+  {
+    title: 'TestTitle2',
+    category: 'home',
+    cost: 250,
+    date: '04/02/2024',
+    expense_id: 2,
+  },
 ];
 
 const testBudget = [450, 50, 100, 100, 100, 50, 50, 50];
@@ -49,9 +60,11 @@ const pieChartLabels = [
 const HomePage = () => {
   const [isUserModal, setIsUserModal] = useState(false);
   const [isExpenseModal, setIsExpenseModal] = useState(false);
-  const [user, setUser] = useState("0123")
+  const [userID, setUserID] = useState('1');
+  const [username, setUsername] = useState('test');
   const [expenses, setExpenses] = useState(testExpenses);
-  const [budget, setBudget] = useState(testBudget);
+  const [budget, setBudget] = useState([0,0,0,0,0,0,0,0]);
+  const [income, setIncome] = useState(0);
   const [totalSpend, setTotalSpend] = useState(testSpend);
   const [category, setCategory] = useState('all expenses');
   const [timeFrame, setTimeFrame] = useState('current month');
@@ -85,6 +98,17 @@ const HomePage = () => {
       },
     ],
   });
+
+  //grab userID from cookie and Set User ID to state
+  useEffect(() => {
+    // somehow grab userID
+    // setuserID(cookieSomething
+
+    // fetch username & income
+    
+    // fetch budget
+  }, []);
+
 
   useEffect(() => {
     const newState = [];
@@ -144,49 +168,48 @@ const HomePage = () => {
   };
 
   //Handles Delete Button on Expense
-  const handleDelete = async (expense_id) => {
-    const reqBody = {expense_id};
-    try{
+  const handleDelete = async expense_id => {
+    const reqBody = { expense_id };
+    try {
       const response = await fetch('http://localhost:8080/expense', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(reqBody),
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqBody),
       });
       const expenses = await response.json();
       setExpenses(expenses);
     } catch (error) {
       console.log('error in getting expenses: ', error);
-  }
-  }
+    }
+  };
 
   //get all expenses
   const getExpenses = async () => {
-    const reqBody = {user_id: {user}};
-    try{
+    const reqBody = { user_id: { user } };
+    try {
       const response = await fetch('http://localhost:8080/expense', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(reqBody),
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqBody),
       });
       const expenses = await response.json();
       setExpenses(expenses);
     } catch (error) {
       console.log('error in getting expenses: ', error);
-  }}
+    }
+  };
 
   return (
     <div className='min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-200-500 to-white-500'>
-      <HeaderBar handleUserOpen={handleUserOpen} />
-      <UserModal isOpen={isUserModal} onClose={handleUserClose} />
+      <HeaderBar handleUserOpen={handleUserOpen} username={username} budget={budget} />
+      <UserModal isOpen={isUserModal} onClose={handleUserClose} budget={budget} savedIncome={income} userID={userID} getExpenses={getExpenses}/>
       <TopBar handleExpenseOpen={handleExpenseOpen} />
-      <ExpenseModal isOpen={isExpenseModal} onClose={handleExpenseClose} />
+      <ExpenseModal isOpen={isExpenseModal} onClose={handleExpenseClose} getExpenses={getExpenses} userID={userID}/>
 
       {/* Header Bar */}
       {/* <HeaderBar></HeaderBar> */}
       <div className='flex'>
-        <Expenses 
-          handleDelete={handleDelete}
-          expenses={expenses} />
+        <Expenses handleDelete={handleDelete} expenses={expenses} />
         <PieChartArea
           chartData={chartData}
           totalSpend={totalSpend}
