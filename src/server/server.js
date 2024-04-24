@@ -4,6 +4,7 @@ const path = require('path');
 const PORT = 3000;
 const userController = require('./controllers/userController');
 const expenseController = require('./controllers/expenseController');
+const testRouter = require('./routers/testRouter');
 
 const db = require('./models/dbModels');
 const exp = require('constants');
@@ -16,27 +17,8 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
-// Test Routes
-app.get('/testGetCategory', async (req, res) => {
-  try {
-    const result = await db.query('SELECT * FROM categories;');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.get('/testGetUser', async (req, res) => {
-  try {
-    const result = await db.query('SELECT * FROM users WHERE user_id = 1;');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
+// Test Path Router
+app.use('/test', testRouter);
 // adding route for /signup that directs to userController and sessionController
 app.post('/signup', userController.createUser, (req, res) => {
   res.status(200).json(res.locals.signUpMessage);

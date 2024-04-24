@@ -43,7 +43,7 @@ describe('GET various path, all should resolve to index.html', () => {
 
 describe('GET information from database with server routes', () => {
   it('responds with a list of categories', async () => {
-    const response = await request(app).get('/testGetCategory');
+    const response = await request(app).get('/test/testGetCategory');
     expect(response.statusCode).toBe(200);
     expect(response.type).toBe('application/json');
     expect(response.body).toEqual([
@@ -58,7 +58,7 @@ describe('GET information from database with server routes', () => {
   });
 
   it('responds with a single user', async () => {
-    const response = await request(app).get('/testGetUser');
+    const response = await request(app).get('/test/testGetUser');
     expect(response.statusCode).toBe(200);
     expect(response.type).toBe('application/json');
     expect(response.body).toEqual(
