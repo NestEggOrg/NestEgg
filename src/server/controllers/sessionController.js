@@ -23,10 +23,8 @@ cookie will have a life of 30 min
 
     // store cookie in database 
     const params = [userId]
-    console.log('params', params)
-    const cookieQuery = `UPDATE users SET session_id = $1, session_expires = now() + INTERVAL '3 days' WHERE user_id = $1 RETURNING *`
+    const cookieQuery = `UPDATE users SET session_id = $1, session_expires = now() + INTERVAL '30 minutes' WHERE user_id = $1 RETURNING *`
     const result = await db.query(cookieQuery, params)
-    console.log('result', result.rows[0])
     return next()
   } 
   catch(err) {

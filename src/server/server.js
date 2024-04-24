@@ -37,7 +37,7 @@ app.post('/signup', userController.createUser, sessionController.startSession, (
 
 // adding route for /signin that directs to userController and sessionController
 app.post('/signin', userController.verifyUser, sessionController.startSession, (req, res) => {
-  console.log('cookie', req.cookie)
+  
   res.status(200).json(res.locals.signInMessage); 
 
 })
@@ -66,7 +66,7 @@ app.use((err, req, res, next) => {
   };
   // Object.assign to overwrite defaultErr with properties from err
   const errorObj = Object.assign(defaultErr, err);
-  console.log('We are in the global error handler: ',err, errorObj.log);
+  console.log('We are in the global error handler: ', errorObj.log);
   // respond using errObj status
   return res.status(errorObj.status).send(errorObj.message);
 });
