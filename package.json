@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production nodemon src/server/server.js",
     "build": "webpack --mode production",
     "dev": "concurrently \"NODE_ENV=development nodemon src/server/server.js\" \"NODE_ENV=development webpack serve --open --hot\"",
-    "test": "jest"
+    "test": "jest --verbose --detectOpenHandles"
   },
   "nodemonConfig": {
     "ignore": [
@@ -57,11 +57,13 @@
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jest-mock-extended": "^3.0.6",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.1.0",
     "postcss-loader": "^8.1.1",
     "prettier": "^3.2.5",
+    "prop-types": "^15.8.1",
     "sass": "^1.71.1",
     "sass-loader": "^14.1.1",
     "style-loader": "^3.3.4",
