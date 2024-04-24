@@ -19,7 +19,7 @@ router.delete('/expense', expenseController.deleteExpense, (req, res) => {
 })
 
 //gets all budgets by user ID
-router.get('/budget/:user_id', budgetController.getAllBudgets, (req, res) => {
+router.get('/budget', budgetController.getAllBudgets, (req, res) => {
   return res.status(200).json(res.locals.budgets);
 })
 

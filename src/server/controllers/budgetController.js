@@ -2,8 +2,7 @@ const db = require('../models/dbModels');
 
 const budgetController = {
   getAllBudgets(req, res, next) {
-    console.log('in all budgets')
-    const { user_id } = req.params;
+    const user_id = req.cookies.sessionCookie;
     const query = `SELECT * FROM users
     WHERE user_id = ${user_id}`;
     db.query(query)

@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }) => {
+const UserModal = ({
+  isOpen,
+  onClose,
+  budget,
+  savedIncome,
+  getExpenses,
+  userID,
+}) => {
   if (!isOpen) return null;
 
   const [income, setIncome] = useState(savedIncome);
@@ -16,8 +23,8 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
 
   const [leftover, setLeftover] = useState(0);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async e => {
+    e.preventDefault();
     const reqBody = {
       income,
       housing,
@@ -27,9 +34,9 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
       transport,
       debt,
       entertainment,
-      misc
-    }
-    console.log(reqBody)
+      misc,
+    };
+    console.log(reqBody);
     try {
       const response = await fetch('/api/budget', {
         method: 'PUT',
@@ -40,7 +47,7 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
     } catch (error) {
       console.log('error in updating budget: ', error);
     }
-  }
+  };
 
   const handleIncome = e => {
     setIncome(e.target.value);
@@ -130,7 +137,11 @@ const UserModal = ({ isOpen, onClose, budget, savedIncome, getExpenses, userID }
       >
         <button onClick={onClose}>X</button>
 
-        <form onSubmit={(e) => {handleSubmit(e)}}>
+        <form
+          onSubmit={e => {
+            handleSubmit(e);
+          }}
+        >
           <h1 className='text-2xl'>Income</h1>
 
           <div>

@@ -63,7 +63,7 @@ const HomePage = () => {
   const [userID, setUserID] = useState('1');
   const [username, setUsername] = useState('test');
   const [expenses, setExpenses] = useState(testExpenses);
-  const [budget, setBudget] = useState([0,0,0,0,0,0,0,0]);
+  const [budget, setBudget] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [income, setIncome] = useState(0);
   const [totalSpend, setTotalSpend] = useState(testSpend);
   const [category, setCategory] = useState('all expenses');
@@ -101,13 +101,11 @@ const HomePage = () => {
 
   //grab userID from cookie and Set User ID to state
   useEffect(() => {
-    
-
     // fetch username & income
-    getExpenses()
+    getExpenses();
+    getBudget();
     // fetch budget
   }, []);
-
 
   useEffect(() => {
     const newState = [];
@@ -175,7 +173,7 @@ const HomePage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reqBody),
       });
-      getExpenses()
+      getExpenses();
     } catch (error) {
       console.log('error in getting expenses: ', error);
     }
@@ -186,8 +184,48 @@ const HomePage = () => {
     try {
       const response = await fetch(`api/expense`);
       const expenses = await response.json();
-      console.log("expense", expenses)
+      console.log('expense', expenses);
       setExpenses(expenses);
+      const totalExp = [0,0,0,0,0,0,0,0];
+      expenses.forEach((el) => {
+        
+        if(el['_category_id'] === 1) totalExp[0] += parseInt(el['amount']);
+        if(el['_category_id'] === 2) totalExp[1] += parseInt(el['amount']);
+        if(el['_category_id'] === 8) totalExp[2] += parseInt(el['amount']);
+        if(el['_category_id'] === 5) totalExp[3] += parseInt(el['amount']);
+        if(el['_category_id'] === 3) totalExp[4] += parseInt(el['amount']);
+        if(el['_category_id'] === 4) totalExp[5] += parseInt(el['amount']);
+        if(el['_category_id'] === 6) totalExp[6] += parseInt(el['amount']);
+        if(el['_category_id'] === 7) totalExp[7] += parseInt(el['amount']);
+      })
+      console.log("totalspend", totalExp)
+      setTotalSpend(totalExp)
+      
+    } catch (error) {
+      console.log('error in getting expenses: ', error);
+    }
+  };
+
+  const getBudget = async () => {
+    try {
+      const response = await fetch(`api/budget`);
+      const budget = await response.json();
+      console.log('budget', budget);
+
+      const budgetArr = [
+        budget[0].housing,
+        budget[0].utilities,
+        budget[0].food,
+        budget[0].shopping,
+        budget[0].transport,
+        budget[0].debt,
+        budget[0].entertainment,
+        budget[0].misc,
+      ];
+      console.log('budgetarr', budgetArr);
+      setBudget(budgetArr);
+      setIncome(budget[0].income);
+      setUsername(budget[0].username);
     } catch (error) {
       console.log('error in getting expenses: ', error);
     }
@@ -195,10 +233,26 @@ const HomePage = () => {
 
   return (
     <div className='min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-200-500 to-white-500'>
-      <HeaderBar handleUserOpen={handleUserOpen} username={username} budget={budget} />
-      <UserModal isOpen={isUserModal} onClose={handleUserClose} budget={budget} savedIncome={income} userID={userID} getExpenses={getExpenses}/>
+      <HeaderBar
+        handleUserOpen={handleUserOpen}
+        username={username}
+        budget={budget}
+      />
+      <UserModal
+        isOpen={isUserModal}
+        onClose={handleUserClose}
+        budget={budget}
+        savedIncome={income}
+        userID={userID}
+        getExpenses={getExpenses}
+      />
       <TopBar handleExpenseOpen={handleExpenseOpen} />
-      <ExpenseModal isOpen={isExpenseModal} onClose={handleExpenseClose} getExpenses={getExpenses} userID={userID}/>
+      <ExpenseModal
+        isOpen={isExpenseModal}
+        onClose={handleExpenseClose}
+        getExpenses={getExpenses}
+        userID={userID}
+      />
 
       {/* Header Bar */}
       {/* <HeaderBar></HeaderBar> */}

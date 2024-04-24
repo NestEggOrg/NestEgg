@@ -5,9 +5,10 @@ import LegendItem from './LegendItem';
 
 
 const PieChartArea = ({chartData, category, timeFrame, totalSpend, budget, categories}) => {
+  console.log("here", totalSpend)
 
-  const spent = totalSpend.reduce((acc, curr) => acc + curr, 0)
-  const totalBudget = budget.reduce((acc, curr) => acc +curr, 0)
+  const spent = totalSpend.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0)
+  const totalBudget = budget.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0)
 
   const legendItems = [];
   totalSpend.forEach((cat, index) => {
@@ -28,7 +29,7 @@ const PieChartArea = ({chartData, category, timeFrame, totalSpend, budget, categ
         timeFrame={timeFrame}></PieChart>
         <div className={`border-2 border-black flex justify-between bg-slate-300 shadow-md rounded px-8 pt-2 pb-2 mb-1 mt-3 ml-1 mr-1`}>
             <div>Total</div>
-            <div>${spent} / ${totalBudget}</div>
+            <div>${spent} / ${totalBudget ? totalBudget : ' - ' }</div>
         </div>
         <div>
           {legendItems}
