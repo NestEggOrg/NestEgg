@@ -8,42 +8,10 @@ import TopBar from './TopBar';
 import UserModal from './UserModal';
 import ExpenseModal from './ExpenseModal';
 
-const TestData = [
-  {
-    id: 1,
-    year: 2016,
-    userGain: 80000,
-    userLost: 823,
-  },
-  {
-    id: 2,
-    year: 2017,
-    userGain: 45677,
-    userLost: 345,
-  },
-  {
-    id: 3,
-    year: 2018,
-    userGain: 78888,
-    userLost: 555,
-  },
-  {
-    id: 4,
-    year: 2019,
-    userGain: 90000,
-    userLost: 4555,
-  },
-  {
-    id: 5,
-    year: 2020,
-    userGain: 4300,
-    userLost: 234,
-  },
-];
 
 const testExpenses = [
-  { title: 'TestTitle', category: 'home', cost: 150, date: '04/01/2024' },
-  { title: 'TestTitle2', category: 'home', cost: 250, date: '04/02/2024' },
+  { title: 'TestTitle', category: 'home', cost: 150, date: '04/01/2024', expense_id: 1},
+  { title: 'TestTitle2', category: 'home', cost: 250, date: '04/02/2024', expense_id: 2 },
 ];
 
 const testBudget = [450, 50, 100, 100, 100, 50, 50, 50];
@@ -60,28 +28,28 @@ const categories = [
   'Misc',
 ];
 const pieChartLabels = [
-  'Housing',
+  'Housing Spent',
   'Housing Remaining',
-  'Utilities',
+  'Utilities Spent',
   'Utilities Remaining',
-  'Food',
+  'Food Spent',
   'Food Remaining',
-  'Shopping',
+  'Shopping Spent',
   'Shopping Remaining',
-  'Transport',
+  'Transport Spent',
   'Transport Remaining',
-  'Debt',
+  'Debt Spent',
   'Debt Remaining',
-  'Entertainment',
+  'Entertainment Spent',
   'Entertainment Remaining',
-  'Misc',
+  'Misc Spent',
   'Misc Remaining',
 ];
 
 const HomePage = () => {
   const [isUserModal, setIsUserModal] = useState(false);
   const [isExpenseModal, setIsExpenseModal] = useState(false);
-
+  const [user, setUser] = useState("0123")
   const [expenses, setExpenses] = useState(testExpenses);
   const [budget, setBudget] = useState(testBudget);
   const [totalSpend, setTotalSpend] = useState(testSpend);
@@ -132,7 +100,7 @@ const HomePage = () => {
       labels: pieChartLabels,
       datasets: [
         {
-          label: 'spend',
+          label: 'Amount',
           data: pieSlices,
           backgroundColor: [
             'rgb(190 18 60)',
@@ -176,9 +144,35 @@ const HomePage = () => {
   };
 
   //Handles Delete Button on Expense
-  const handleDelete = () => {
-    console.log("deleted")
+  const handleDelete = async (expense_id) => {
+    const reqBody = {expense_id};
+    try{
+      const response = await fetch('http://localhost:8080/expense', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reqBody),
+      });
+      const expenses = await response.json();
+      setExpenses(expenses);
+    } catch (error) {
+      console.log('error in getting expenses: ', error);
   }
+  }
+
+  //get all expenses
+  const getExpenses = async () => {
+    const reqBody = {user_id: {user}};
+    try{
+      const response = await fetch('http://localhost:8080/expense', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reqBody),
+      });
+      const expenses = await response.json();
+      setExpenses(expenses);
+    } catch (error) {
+      console.log('error in getting expenses: ', error);
+  }}
 
   return (
     <div className='min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-200-500 to-white-500'>

@@ -10,7 +10,7 @@ const LegendItem = ({ category, spend, budget, color }) => {
     >
       <div>{category}</div>
       <div>
-        {spend}/{budget}
+        ${spend} / ${budget}
       </div>
     </div>
   );
