@@ -6,8 +6,21 @@ const Login = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // Login Logic
-    console.log('Username:', username, 'Password:', password);
+    fetch('/api/signin', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        // 'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: username, password: password }),
+    })
+    .then((result) => {
+      return result.json()
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   };
 
   const handleSignUp = () => {
