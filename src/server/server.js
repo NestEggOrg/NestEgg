@@ -3,8 +3,7 @@ const app = express();
 const path = require('path');
 const PORT = 3000;
 const userController = require('./controllers/userController');
-const expenseController = require('./controllers/expenseController')
-
+const apiRouter = require('./routers/apiRouter')
 
 const db = require('./models/dbModels');
 const exp = require('constants');
@@ -16,8 +15,9 @@ app.use(express.urlencoded());
 // Serve static files from the 'dist' directory
 app.use(express.static(path.join(__dirname, '../../dist')));
 
-// Routes
-
+//route all /api routes to apiRouter
+app.use('/api', apiRouter)
+//route for testing purposes
 app.get('/example', async (req, res) => {
   try {
     const result = await db.query('SELECT * FROM categories');
@@ -27,7 +27,6 @@ app.get('/example', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 // adding route for /signup that directs to userController and sessionController
 app.post('/signup', userController.createUser, (req, res) => {
@@ -39,21 +38,6 @@ app.post('/signup', userController.createUser, (req, res) => {
 app.post('/signin', userController.verifyUser, (req, res) => {
   res.status(200).json(res.locals.signInMessage); 
 
-})
-
-//retrieves all expenses from a database from a given user ID
-app.get('/expense', expenseController.getAllExpenses, (req, res) => {
-  return res.status(200).json(res.locals.expenses);
-})
-
-//adds a new expense to the database
-app.post('/expense', expenseController.createExpense, (req, res) => {
-  return res.sendStatus(200);
-})
-
-//deletes an expense by ID
-app.delete('/expense', expenseController.deleteExpense, (req, res) => {
-  return res.sendStatus(200);
 })
 
 //catch all before 404 to serve login page
