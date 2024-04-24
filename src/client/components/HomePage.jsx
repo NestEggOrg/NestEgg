@@ -170,7 +170,7 @@ const HomePage = () => {
   const handleDelete = async expense_id => {
     const reqBody = { expense_id };
     try {
-      const response = await fetch('http://localhost:8080/expense', {
+      const response = await fetch('api/expense', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reqBody),
@@ -184,9 +184,8 @@ const HomePage = () => {
 
   //get all expenses
   const getExpenses = async () => {
-
     try {
-      const response = await fetch(`api/expense/${userID}`);
+      const response = await fetch(`api/expense`);
       const expenses = await response.json();
       console.log(expenses)
       setExpenses(expenses);

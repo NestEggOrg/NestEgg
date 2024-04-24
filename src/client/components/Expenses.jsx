@@ -5,7 +5,7 @@ const Expenses = ({ expenses, handleDelete }) => {
   const expenseList = [];
 
     expenses.forEach(ex => {
-    expenseList.push(
+    expenseList.unshift(
     <Expense
       id={ex.expense_id}
       title={ex.title}
