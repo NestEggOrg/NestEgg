@@ -2,13 +2,12 @@ const db = require('../models/dbModels');
 
 const budgetController = {
   getAllBudgets(req, res, next) {
-    const { user_id } = req.body;
-    const query = `SELECT * FROM budgets
-    LEFT JOIN categories ON budgets._category_id = categories.category_id
-    WHERE budgets._user_id = ${user_id}`;
+    const { user_id } = req.params;
+    const query = `SELECT * FROM users
+    WHERE user_id = ${user_id}`;
     db.query(query)
       .then(data => {
-        res.locals.budgets = data.rows; 
+        res.locals.budgets = data.rows;
         return next();
       })
       .catch(err => {
@@ -19,23 +18,34 @@ const budgetController = {
       });
   },
   createBudget(req, res, next) {
-    const { _user_id } = req.body;
-    const query = `INSERT INTO budgets (_user_id, _category_id, amount) VALUES (${_user_id}, 1, 0) RETURNING budget_id`;
-    db.query(query)
-      .then(data => {
-        console.log('Budget created with id: ', data);
-        return next();
-      })
-      .catch(err => {
-        return next({
-          log: `Error in budgetController.createBudget: ${err}`,
-          message: `An error occured while creating budget: ${err}`,
-        });
-      });
+    // const { user_id } = req.body;
+    // const query 
+    // db.query(query)
+    //   .then(data => {
+    //     console.log('Budget created with id: ', data);
+    //     return next();
+    //   })
+    //   .catch(err => {
+    //     return next({
+    //       log: `Error in budgetController.createBudget: ${err}`,
+    //       message: `An error occured while creating budget: ${err}`,
+    //     });
+    //   });
   },
   updateBudget(req, res, next) {
-    const { budget_id } = req.body;
-    const query = `UPDATE budgets SET  WHERE budget_id = ${budget_id} RETURNING budget_id`; 
+    const {
+      user_id,
+      income,
+      housing,
+      utilities,
+      transport,
+      debt,
+      shopping,
+      entertainment,
+      food,
+      misc,
+    } = req.body;
+    const query = `UPDATE users SET income = ${income}, housing = ${housing}, utilities = ${utilities}, transport = ${transport}, debt = ${debt}, shopping = ${shopping}, entertainment = ${entertainment}, food = ${food}, misc = ${misc} WHERE user_id = ${user_id}`;
     db.query(query)
       .then(data => {
         console.log(`Budget updated with id: ${data}`);

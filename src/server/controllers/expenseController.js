@@ -2,7 +2,7 @@ const db = require('../models/dbModels');
 
 const expenseController = {
   getAllExpenses(req, res, next) {
-    const { user_id } = req.body;
+    const { user_id } = req.params;
     const query = `SELECT * FROM expenses WHERE _user_id = ${user_id}`;
     db.query(query)
       .then(data => {
