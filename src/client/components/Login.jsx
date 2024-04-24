@@ -6,7 +6,7 @@ const Login = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    fetch('/auth/signin', {
+    fetch('localhost:8080/auth/signin', {
       method: 'POST',
       credentials: 'include',
       headers: {
