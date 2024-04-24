@@ -7,7 +7,7 @@ const db = require('../src/server/models/dbModels');
 afterAll(async () => {
   await db.end();
 });
-describe('GET *', () => {
+describe('GET various path, all should resolve to index.html', () => {
   it('responds with index.html for / route', async () => {
     const response = await request(app).get('/');
 
@@ -41,7 +41,7 @@ describe('GET *', () => {
   });
 });
 
-describe('GET Categories from Database', () => {
+describe('GET information from database with server routes', () => {
   it('responds with a list of categories', async () => {
     const response = await request(app).get('/testGetCategory');
     expect(response.statusCode).toBe(200);
@@ -55,5 +55,19 @@ describe('GET Categories from Database', () => {
       { category_id: 6, category_name: 'entertainment' },
       { category_id: 7, category_name: 'misc' },
     ]);
+  });
+
+  it('responds with a single user', async () => {
+    const response = await request(app).get('/testGetUser');
+    expect(response.statusCode).toBe(200);
+    expect(response.type).toBe('application/json');
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          user_id: 1,
+          username: 'TestUser',
+        }),
+      ]),
+    );
   });
 });

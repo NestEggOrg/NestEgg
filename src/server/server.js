@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const PORT = 3000;
 const userController = require('./controllers/userController');
-const expenseController = require('./controllers/expenseController')
+const expenseController = require('./controllers/expenseController');
 
 const db = require('./models/dbModels');
 const exp = require('constants');
@@ -16,10 +16,20 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
-
+// Test Routes
 app.get('/testGetCategory', async (req, res) => {
   try {
-    const result = await db.query('SELECT * FROM categories');
+    const result = await db.query('SELECT * FROM categories;');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('/testGetUser', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE user_id = 1;');
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -40,17 +50,17 @@ app.post('/signin', userController.verifyUser, (req, res) => {
 //retrieves all expenses from a database from a given user ID
 app.get('/expense', expenseController.getAllExpenses, (req, res) => {
   return res.status(200).json(res.locals.expenses);
-})
+});
 
 //adds a new expense to the database
 app.post('/expense', expenseController.createExpense, (req, res) => {
   return res.sendStatus(200);
-})
+});
 
 //deletes an expense by ID
 app.delete('/expense', expenseController.deleteExpense, (req, res) => {
   return res.sendStatus(200);
-})
+});
 
 //catch all before 404 to serve login page
 app.get('*', (req, res) => {
