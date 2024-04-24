@@ -5,7 +5,8 @@ const path = require('path');
 const PORT = 3000;
 const userController = require('./controllers/userController');
 const sessionController = require('./controllers/sessionController')
-
+// import auth router 
+const authRouter = require('./routers/authRouter')
 
 
 const db = require('./models/dbModels');
@@ -17,7 +18,6 @@ app.use(express.urlencoded());
 
 
 // Routes
-
 // app.get('/example', async (req, res) => {
 //   try {
 //     const result = await db.query('SELECT * FROM categories');
@@ -27,19 +27,7 @@ app.use(express.urlencoded());
 //     res.status(500).send('Internal Server Error');
 //   }
 // });
-
-
-// adding route for /signup that directs to userController and sessionController
-app.post('/signup', userController.createUser, sessionController.startSession, (req, res) => {
-  res.status(200).json(res.locals.signUpMessage);
-
-})
-
-// adding route for /signin that directs to userController and sessionController
-app.post('/api/signin', userController.verifyUser, sessionController.startSession, (req, res) => {
-  res.status(200).json(res.locals.signInMessage);
-
-})
+app.use('/auth', authRouter); 
 
 
 // Serve static files from the 'dist' directory

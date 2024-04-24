@@ -70,6 +70,6 @@ module.exports = {
     open: true,
     compress: true,
     historyApiFallback: true,
-    proxy: [{ context: ['/'], target: 'http://localhost:3000' }],
+    proxy: [{ context: ['/api/**', '/auth/**'], target: 'http://localhost:3000' }],
   },
 };
