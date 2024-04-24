@@ -6,6 +6,7 @@ const PORT = 3000;
 const userController = require('./controllers/userController');
 const authRouter = require('./routers/authRouter');
 const apiRouter = require('./routers/apiRouter');
+const testRouter = require('./routers/testRouter');
 
 const db = require('./models/dbModels');
 
@@ -18,20 +19,14 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
+// Test Router
+app.use('/test', testRouter);
+
+// Auth Router
 app.use('/auth', authRouter);
 
 //route all /api routes to apiRouter
 app.use('/api', apiRouter);
-
-// adding route for /signup that directs to userController and sessionController
-app.post('/signup', userController.createUser, (req, res) => {
-  res.status(200).json(res.locals.signUpMessage);
-});
-
-// adding route for /signin that directs to userController and sessionController
-app.post('/signin', userController.verifyUser, (req, res) => {
-  res.status(200).json(res.locals.signInMessage);
-});
 
 //catch all before 404 to serve login page
 app.get('*', (req, res) => {
