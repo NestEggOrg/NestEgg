@@ -32,9 +32,6 @@ const expenseController = {
         });
       });
   },
-  updateExpense(req, res, next) {
-    //leaving blank for now, stretch feature to update expenses
-  },
   deleteExpense(req, res, next) {
     const { expense_id } = req.body;
     const query = `DELETE FROM expenses WHERE expense_id = ${expense_id} RETURNING expense_id`;

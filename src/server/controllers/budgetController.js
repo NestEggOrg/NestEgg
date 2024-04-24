@@ -17,21 +17,6 @@ const budgetController = {
         });
       });
   },
-  createBudget(req, res, next) {
-    // const { user_id } = req.body;
-    // const query 
-    // db.query(query)
-    //   .then(data => {
-    //     console.log('Budget created with id: ', data);
-    //     return next();
-    //   })
-    //   .catch(err => {
-    //     return next({
-    //       log: `Error in budgetController.createBudget: ${err}`,
-    //       message: `An error occured while creating budget: ${err}`,
-    //     });
-    //   });
-  },
   updateBudget(req, res, next) {
     const {
       user_id,
