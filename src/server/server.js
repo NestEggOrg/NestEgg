@@ -7,7 +7,6 @@ const userController = require('./controllers/userController');
 
 
 const db = require('./models/dbModels');
-const exp = require('constants');
 
 //parse incoming JSON and form data
 app.use(cookieParser())
@@ -16,17 +15,7 @@ app.use(express.urlencoded());
 
 
 // Routes
-// app.get('/example', async (req, res) => {
-//   try {
-//     const result = await db.query('SELECT * FROM categories');
-//     res.json(result.rows);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
 app.use('/auth', authRouter); 
-
 
 // Serve static files from the 'dist' directory
 app.use(express.static(path.join(__dirname, '../../dist')));
