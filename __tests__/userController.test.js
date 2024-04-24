@@ -12,6 +12,9 @@ function mockQuery(mockResponse) {
   db.query.mockImplementation((query, params) => {
     console.log('Mocked query:', query);
     console.log('Mocked params:', params);
+    if (query.includes('INSERT INTO users')) {
+      return Promise.resolve({ rows: [{ user_id: 1 }] });
+    }
     return Promise.resolve(mockResponse);
   });
 }
@@ -19,7 +22,6 @@ describe('POST /signup', () => {
   it('should create a new user and return a success message', async () => {
     // Mock the database response for a successful user creation
     mockQuery({ rows: [] }); // No existing user
-    // mockQuery({ rows: [{ user_id: 1 }] }); // Successful insert
 
     const response = await request(app)
       .post('/signup')

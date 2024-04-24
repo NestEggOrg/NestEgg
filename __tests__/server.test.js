@@ -41,9 +41,9 @@ describe('GET *', () => {
   });
 });
 
-describe('GET /example', () => {
+describe('GET Categories from Database', () => {
   it('responds with a list of categories', async () => {
-    const response = await request(app).get('/example');
+    const response = await request(app).get('/testGetCategory');
     expect(response.statusCode).toBe(200);
     expect(response.type).toBe('application/json');
     expect(response.body).toEqual([

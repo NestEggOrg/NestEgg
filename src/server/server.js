@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
 
-app.get('/example', async (req, res) => {
+app.get('/testGetCategory', async (req, res) => {
   try {
     const result = await db.query('SELECT * FROM categories');
     res.json(result.rows);
