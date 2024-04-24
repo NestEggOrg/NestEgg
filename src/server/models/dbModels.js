@@ -20,4 +20,7 @@ module.exports = {
     console.log('executed query', text);
     return pool.query(text, params, callback);
   },
+  end: () => {
+    return pool.end().then(() => console.log('db connection closed'));
+  },
 };

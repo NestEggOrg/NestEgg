@@ -2,7 +2,7 @@ const db = require('../models/dbModels');
 
 const expenseController = {
   getAllExpenses(req, res, next) {
-    const { user_id } = req.body;
+    const { user_id } = req.params;
     const query = `SELECT * FROM expenses WHERE _user_id = ${user_id}`;
     db.query(query)
       .then(data => {
@@ -31,9 +31,6 @@ const expenseController = {
           message: `An error occured while posting expense: ${err}`,
         });
       });
-  },
-  updateExpense(req, res, next) {
-    //leaving blank for now, stretch feature to update expenses
   },
   deleteExpense(req, res, next) {
     const { expense_id } = req.body;
