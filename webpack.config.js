@@ -48,19 +48,6 @@ module.exports = {
     }),
   ],
   devServer: {
-    //   host: 'localhost',
-    //   port: 8080,
-    //   hot: true,
-    //   static: {
-    //     directory: path.resolve(__dirname,'dist')
-    //   },
-    //   proxy: [
-    //   {
-    //     context: ['/api/**'],
-    //     target: 'http://localhost:3000',
-    //   }
-    // ],
-
     static: {
       directory: path.join(__dirname, './build'),
       publicPath: '/build/bundle.js',
