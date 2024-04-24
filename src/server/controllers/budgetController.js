@@ -2,8 +2,7 @@ const db = require('../models/dbModels');
 
 const budgetController = {
   getAllBudgets(req, res, next) {
-    console.log('in all budgets')
-    const { user_id } = req.params;
+    const user_id = req.cookies.sessionCookie;
     const query = `SELECT * FROM users
     WHERE user_id = ${user_id}`;
     db.query(query)
@@ -20,7 +19,6 @@ const budgetController = {
   },
   updateBudget(req, res, next) {
     const {
-      user_id,
       income,
       housing,
       utilities,
@@ -31,6 +29,7 @@ const budgetController = {
       food,
       misc,
     } = req.body;
+    const user_id = req.cookies.sessionCookie;
     const query = `UPDATE users SET income = ${income}, housing = ${housing}, utilities = ${utilities}, transport = ${transport}, debt = ${debt}, shopping = ${shopping}, entertainment = ${entertainment}, food = ${food}, misc = ${misc} WHERE user_id = ${user_id}`;
     db.query(query)
       .then(data => {

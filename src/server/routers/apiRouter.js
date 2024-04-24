@@ -4,7 +4,7 @@ const expenseController = require('../controllers/expenseController');
 const budgetController = require('../controllers/budgetController')
 
 //retrieves all expenses from a database from a given user ID
-router.get('/expense/:user_id', expenseController.getAllExpenses, (req, res) => {
+router.get('/expense', expenseController.getAllExpenses, (req, res) => {
   return res.status(200).json(res.locals.expenses);
 })
 
@@ -19,7 +19,7 @@ router.delete('/expense', expenseController.deleteExpense, (req, res) => {
 })
 
 //gets all budgets by user ID
-router.get('/budget/:user_id', budgetController.getAllBudgets, (req, res) => {
+router.get('/budget', budgetController.getAllBudgets, (req, res) => {
   return res.status(200).json(res.locals.budgets);
 })
 

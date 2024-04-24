@@ -95,7 +95,7 @@ const Login = () => {
         </div>
         <div className='flex items-center justify-center text-sm mt-4'>
           <a
-            href='/test'
+            href='#'
             className='font-medium text-purple-600 hover:text-purple-500'
           >
             Forgot your password?
