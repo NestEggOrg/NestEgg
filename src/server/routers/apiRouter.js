@@ -23,12 +23,12 @@ router.get('/budget', budgetController.getAllBudgets, (req, res) => {
   return res.status(200).json(res.locals.budgets);
 })
 
-//creates a budget tied to user ID
+//creates a budget tied to user ID, no return value
 router.get('/budget', budgetController.createBudget, (req, res) => {
   return res.status(200);
 })
 
-//updates an existing budget by ID
+//updates an existing budget by ID, no return value
 router.put('/budget', budgetController.updateBudget, (req, res) => {
   return res.status(200);
 })
