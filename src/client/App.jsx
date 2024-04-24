@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
+import SignUp from './components/SignUp'; 
 
 const isAuthenticated = () => {
   // Check if user is authenticated
@@ -23,6 +24,7 @@ const App = () => {
       <Router>
         <Routes>
         <Route path='/' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/home' element={<HomePage />} />
         </Routes>
       </Router>

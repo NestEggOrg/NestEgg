@@ -13,7 +13,13 @@ cookie will have a life of 30 min
     try{
       // get user id from previous controller
     const userId = res.locals.userId; 
-    // create cookie to store userId 
+    const verified = res.locals.verified
+
+    if (!verified){
+      return next()
+    } 
+    else {
+      // create cookie to store userId 
     res.cookie('sessionCookie', `${userId}`, {
       httpOnly: true, 
       secure: true,
@@ -26,6 +32,7 @@ cookie will have a life of 30 min
     const cookieQuery = `UPDATE users SET session_id = $1, session_expires = now() + INTERVAL '30 minutes' WHERE user_id = $1 RETURNING *`
     const result = await db.query(cookieQuery, params)  
     return next()
+    }
   } 
   catch(err) {
     return next({
