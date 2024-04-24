@@ -28,7 +28,7 @@ describe('POST /signup', () => {
       .send({ username: 'newuser', password: 'password123' });
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual('Sign up successful!');
+    expect(response.body).toEqual([true, 'Sign up successful!']);
     expect(db.query).toHaveBeenCalledTimes(3); // Check if queries were called passing middleware
   });
 
@@ -41,7 +41,7 @@ describe('POST /signup', () => {
       .send({ username: 'existinguser', password: 'password123' });
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual('username already exists');
+    expect(response.body).toEqual([false, 'username already exists']);
   });
 });
 
@@ -63,7 +63,7 @@ describe('POST /signin', () => {
       .send({ username: 'existinguser', password: 'mypass' });
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual('Sign in successful');
+    expect(response.body).toEqual([true, 'Sign in successful']);
   });
 
   it('should return an error if username and password combination is not recognized', async () => {
@@ -75,8 +75,9 @@ describe('POST /signin', () => {
       .send({ username: 'nonexistentuser', password: 'wrongpassword' });
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual(
+    expect(response.body).toEqual([
+      false,
       'Username and password combination is not recognized',
-    );
+    ]);
   });
 });
