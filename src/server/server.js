@@ -4,7 +4,8 @@ const app = express();
 const path = require('path');
 const PORT = 3000;
 const userController = require('./controllers/userController');
-
+const authRouter = require('./routers/authRouter')
+const apiRouter = require('./routers/apiRouter')
 
 const db = require('./models/dbModels');
 
@@ -13,25 +14,14 @@ app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded());
 
+// Serve static files from the 'dist' directory
+app.use(express.static(path.join(__dirname, '../../dist')));
 
 // Routes
 app.use('/auth', authRouter); 
 
-// Serve static files from the 'dist' directory
-app.use(express.static(path.join(__dirname, '../../dist')));
-
 //route all /api routes to apiRouter
 app.use('/api', apiRouter)
-//route for testing purposes
-app.get('/example', async (req, res) => {
-  try {
-    const result = await db.query('SELECT * FROM categories');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
-  }
-});
 
 // adding route for /signup that directs to userController and sessionController
 app.post('/signup', userController.createUser, (req, res) => {
