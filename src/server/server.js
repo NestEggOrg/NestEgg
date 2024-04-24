@@ -3,11 +3,9 @@ const cookieParser = require('cookie-parser')
 const app = express();
 const path = require('path');
 const PORT = 3000;
-const userController = require('./controllers/userController');
-const sessionController = require('./controllers/sessionController'); 
+
 // import auth router 
 const authRouter = require('./routers/authRouter')
-
 
 const db = require('./models/dbModels');
 

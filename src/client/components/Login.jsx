@@ -1,12 +1,17 @@
+import { Result } from 'postcss';
 import React, { useState } from 'react';
+import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+
 
 const Login = () => {
+  const navigate = useNavigate(); 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    fetch('localhost:8080/auth/signin', {
+    fetch('/auth/signin', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -15,9 +20,16 @@ const Login = () => {
       },
       body: JSON.stringify({ username: username, password: password }),
     })
-    .then((result) => {
-      return result.json()
-    })
+    .then(res =>  res.json())
+    .then((res) => {
+      if (res[0] === false){
+        alert(res[1]); 
+      }
+      else{
+        navigate('/home')
+      }
+      }
+    )
     .catch((err)=>{
       console.log(err)
     })

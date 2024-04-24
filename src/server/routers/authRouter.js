@@ -13,7 +13,7 @@ router.post('/signup', userController.createUser, sessionController.startSession
   
 // adding route for /signin that directs to userController and sessionController
 router.post('/signin', userController.verifyUser, sessionController.startSession, (req, res) => {
-res.status(200).json(res.locals.signInMessage);
+    return res.status(200).json([res.locals.verified, res.locals.signInMessage]);
 
 })
 

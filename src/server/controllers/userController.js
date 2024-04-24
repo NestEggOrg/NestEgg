@@ -59,7 +59,8 @@ verifyUser: async(req, res, next) => {
         const result = await db.query(usernameQuery, paramsOne)
         // if username does not exist return error message 
         if (result.rows.length === 0) {
-            res.locals.signInMessage = 'Username and password combination is not recognized'
+            res.locals.signInMessage = 'Username and password combination is not recognized'; 
+            res.locals.verified =false; 
         }
         else {
             // compare hashed password
@@ -69,7 +70,8 @@ verifyUser: async(req, res, next) => {
             }
             else{
                 res.locals.userId = result.rows[0]['user_id']
-                res.locals.signInMessage = 'Sign in successful'; 
+                res.locals.signInMessage = 'Sign in successful';
+                res.locals.verified = true; 
             }
         }
         return next()
